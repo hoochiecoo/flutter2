@@ -9,7 +9,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  # Добавляем плагин WebView
   webview_flutter: ^4.7.0
 
 dev_dependencies:
