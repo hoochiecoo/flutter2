@@ -20,16 +20,28 @@ class _WebViewAppState extends State<WebViewApp> {
   
   final String targetUrl = 'https://bowlmates.club/user/UI/index-tw-pwa2.html?page=twHome';
 
+  // Используем стандартный UserAgent Android Chrome, чтобы сайт доверял приложению
+  // и корректно сохранял куки/localStorage.
+  final String customUserAgent = 
+      'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36';
+
   @override
   void initState() {
     super.initState();
+    
     controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setUserAgent(customUserAgent) // Важно для сессий
       ..setBackgroundColor(const Color(0x00000000))
       ..setNavigationDelegate(
         NavigationDelegate(
-          onProgress: (int progress) {
-            debugPrint('WebView is loading (progress : $progress%)');
+          onProgress: (int progress) {},
+          onPageStarted: (String url) {},
+          onPageFinished: (String url) {},
+          onWebResourceError: (WebResourceError error) {},
+          onNavigationRequest: (NavigationRequest request) {
+            // Разрешаем все переходы внутри WebView, чтобы не выкидывало в браузер
+            return NavigationDecision.navigate;
           },
         ),
       )
@@ -39,6 +51,7 @@ class _WebViewAppState extends State<WebViewApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // SafeArea убрали снизу, чтобы сайт выглядел более нативно
       body: SafeArea(
         child: WebViewWidget(controller: controller),
       ),
