@@ -18,7 +18,7 @@ class WebViewApp extends StatefulWidget {
 class _WebViewAppState extends State<WebViewApp> {
   late final WebViewController controller;
   
-  final String targetUrl = 'https://bowlmates.club/user/UI/index-tw-pwa2.html?page=twHome';
+  final String targetUrl = 'https://bowlmates.club/user/UI/b_logout.html';
 
   // Используем стандартный UserAgent Android Chrome, чтобы сайт доверял приложению
   // и корректно сохранял куки/localStorage.
